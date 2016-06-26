@@ -15,7 +15,7 @@
 # Latest version of WP
 echo "Wordpress indiriliyor...";
 wget --quiet https://tr.wordpress.org/wordpress-4.5.3-tr_TR.zip;
-unzip -q latest.zip;
+unzip -q wordpress-4.5.3-tr_TR.zip;
 echo "Wordpress indirildi ve cikarildi.";
 
 # All-in-One-SEO-Pack
