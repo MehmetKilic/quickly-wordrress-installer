@@ -118,13 +118,13 @@ mv backwpup wordpress/wp-content/plugins/
 # Options Framework
 echo "Fetching Options Framework plugin..."
 wget --quiet "http://downloads.wordpress.org/plugin/options-framework.zip"
-uznip -q options-framework.zip
+unzip -q options-framework.zip
 mv options-framework wordpress/wp-content/plugins/
 
 # Meta
 echo "Fetching Meta Box plugin..."
 wget --quiet "http://downloads.wordpress.org/plugin/meta-box.zip"
-uznip -q meta-box.zip
+unzip -q meta-box.zip
 mv meta-box wordpress/wp-content/plugins/
 
 # Cleanup
