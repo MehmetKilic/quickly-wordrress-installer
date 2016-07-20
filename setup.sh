@@ -61,12 +61,6 @@ wget --quiet http://downloads.wordpress.org/plugin/w3-total-cache.zip
 unzip -q  w3-total-cache.zip;
 mv w3-total-cache wordpress/wp-content/plugins/
 
-# Register Plus Redux (Good for membership-style sites)
-echo "Register Plus Redux...";
-wget --quiet http://downloads.wordpress.org/plugin/register-plus-redux.zip
-unzip -q register-plus-redux.zip
-mv register-plus-redux wordpress/wp-content/plugins/
-
 # Regenerate Thumbnails (good for when you need to make custom sizes)
 echo "Regenerate Thumbnails...";
 wget --quiet http://downloads.wordpress.org/plugin/regenerate-thumbnails.zip
