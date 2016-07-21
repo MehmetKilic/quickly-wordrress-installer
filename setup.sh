@@ -109,6 +109,12 @@ chmod 777 wp-content/uploads
 echo "Gereksiz dosyalar siliniyor..."
 # ilgili klasörü siliyoruz
 rm -rvf wordpress
+rm -rvf all-in-one-seo-pack.zip
+rm -rvf secure-wordpress.zip
+rm -rvf google-sitemap-generator.zip
+rm -rvf wp-super-cache.zip
+rm -rvf __MACOSX/
+cp htaccess.bak .htaccess
 # .zip dosyasını siliyoruz
 rm -rvf wordpress.zip
 # kurulum bash scripti siliyoruz
