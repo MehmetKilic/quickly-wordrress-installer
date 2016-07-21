@@ -12,129 +12,112 @@
 #
 
 
-# Latest version of WP
-echo "Wordpress indiriliyor...";
-wget --quiet http://mehmetkilic.com.tr/wordpress.zip;
-unzip -q wordpress.zip;
-echo "Wordpress indirildi ve cikarildi.";
+#!/bin/bash -e
+clear
+echo "============================================"
+echo "Hızlı Wordpress Kurulumu"
+echo "============================================"
+echo "Yeni veritabanı oluşturulacak mı ? (y/n)"
+read -e setupmysql
+if [ "$setupmysql" == y ] ; then
+	echo "MySQL Root Kullanıcı Adı: "
+	read -e mysqluser
+	echo "MySQL Root Şifresi: "
+	read -s mysqlpass
+	echo "MySQL Host (Varsayılan için enter 'localhost'): "
+	read -e mysqlhost
+		mysqlhost=${mysqlhost:-localhost}
+fi
+echo "WP Veritabanı Adı: "
+read -e dbname
+echo "WP Veritabanı Kullanıcısı: "
+read -e dbuser
+echo "WP Veritabanı Şifresi: "
+read -s dbpass
+echo "WP Veritabanı Tablosu Ön eki (Varsayılan için enter 'wp_'): "
+read -e dbtable
+	dbtable=${dbtable:-wp_}
+echo "Ayarları kaydetmek istediğinizden eminmisiniz ? (y/n)"
+read -e run
+if [ "$run" == y ] ; then
+	if [ "$setupmysql" == y ] ; then
+		echo "============================================"
+		echo "Veritabanı oluşturuluyor"
+		echo "============================================"
+		#login to MySQL, add database, add user and grant permissions
+		dbsetup="create database $dbname;GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@$mysqlhost IDENTIFIED BY '$dbpass';FLUSH PRIVILEGES;"
+		mysql -u $mysqluser -p$mysqlpass -e "$dbsetup"
+		if [ $? != "0" ]; then
+			echo "============================================"
+			echo "[Hata]: Veritabanı oluşturulamadı, lütfen bilgileri kontrol edip tekrar deneyin."
+			echo "============================================"
+			exit 1
+		fi
+	fi
+	echo "============================================"
+	echo "Hızlı Wordpress Kurulumu"
+  echo "@mehmetkilic"
+	echo "============================================"
 
-# All-in-One-SEO-Pack
-echo "Eklentiler indiriliyor.";
-echo "All-in-One-SEO-Pack plugin...";
-wget --quiet http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip;
-unzip -q all-in-one-seo-pack.zip;
-mv all-in-one-seo-pack wordpress/wp-content/plugins/
+  # Wordpress indiriliyor
+  echo "Wordpress indiriliyor...";
+  wget --quiet http://mehmetkilic.com.tr/wordpress.zip;
+  unzip -q wordpress.zip;
+  echo "Wordpress indirildi ve çıkarıldı.";
+	# Wordpress ana dizine taşınıyor
+	echo "Dosyalar çıkarılıyor..."
+	mv wordpress/* ./
 
-# Sitemap Generator
-echo "Google Sitemap Generator plugin...";
-wget --quiet http://downloads.wordpress.org/plugin/google-sitemap-generator.zip;
-unzip -q  google-sitemap-generator.zip;
-mv google-sitemap-generator wordpress/wp-content/plugins/
+  #####  Pluginler indirilip kuruluyor ####
+  # All-in-One-SEO-Pack
+  echo "Eklentiler indiriliyor.";
+  echo "All-in-One-SEO-Pack eklentisi indiriliyor...";
+  wget --quiet http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip;
+  unzip -q all-in-one-seo-pack.zip;
+  mv all-in-one-seo-pack wordpress/wp-content/plugins/
 
-# Secure WordPress
-echo "Secure WordPress plugin...";
-wget --quiet http://downloads.wordpress.org/plugin/secure-wordpress.zip;
-unzip -q  secure-wordpress.zip;
-mv secure-wordpress wordpress/wp-content/plugins/
+  # Sitemap Generator
+  echo "Google Sitemap Generator eklentisi indiriliyor...";
+  wget --quiet http://downloads.wordpress.org/plugin/google-sitemap-generator.zip;
+  unzip -q  google-sitemap-generator.zip;
+  mv google-sitemap-generator wordpress/wp-content/plugins/
 
-# Hierarchy Plugin
-echo "Hierarchy plugin...";
-wget --quiet http://downloads.wordpress.org/plugin/hierarchy.zip;
-unzip -q  hierarchy.zip;
-mv hierarchy wordpress/wp-content/plugins/
+  # Secure WordPress
+  echo "Secure WordPress eklentisi indiriliyor...";
+  wget --quiet http://downloads.wordpress.org/plugin/secure-wordpress.zip;
+  unzip -q  secure-wordpress.zip;
+  mv secure-wordpress wordpress/wp-content/plugins/
 
-# Image Widgets (Why isn't this standard?)
-echo "Image Widget plugin...";
-wget --quiet http://downloads.wordpress.org/plugin/image-widget.zip;
-unzip -q  image-widget.zip;
-mv image-widget wordpress/wp-content/plugins/
-
-# Super-cache
-echo "Super Cache plugin...";
-wget --quiet http://downloads.wordpress.org/plugin/wp-super-cache.zip;
-unzip -q  wp-super-cache.zip;
-mv wp-super-cache wordpress/wp-content/plugins/
-
-# W3 Total Cache (A little redundant with above, but I like options.)
-echo  "W3 Total Cache...";
-wget --quiet http://downloads.wordpress.org/plugin/w3-total-cache.zip
-unzip -q  w3-total-cache.zip;
-mv w3-total-cache wordpress/wp-content/plugins/
-
-# Regenerate Thumbnails (good for when you need to make custom sizes)
-echo "Regenerate Thumbnails...";
-wget --quiet http://downloads.wordpress.org/plugin/regenerate-thumbnails.zip
-unzip -q regenerate-thumbnails.zip
-mv regenerate-thumbnails wordpress/wp-content/plugins/
-
-# Taxonomy Taxi
-echo "Taxonomy Taxi...";
-wget --quiet http://downloads.wordpress.org/plugin/taxonomy-taxi.zip
-unzip -q taxonomy-taxi.zip
-mv taxonomy-taxi wordpress/wp-content/plugins/
-
-# Custom Post Type UI
-echo "Custom Post Type UI...";
-wget --quiet http://downloads.wordpress.org/plugin/custom-post-type-ui.zip
-unzip -q custom-post-type-ui.zip
-mv custom-post-type-ui wordpress/wp-content/plugins/
-
-# WordPress Importer
-echo "WordPress Importer...";
-wget --quiet http://downloads.wordpress.org/plugin/wordpress-importer.zip
-unzip -q wordpress-importer.zip
-mv wordpress-importer wordpress/wp-content/plugins/
-
-# WP-Quick-Pages
-echo "WP-Quick-Pages...";
-wget --quiet http://downloads.wordpress.org/plugin/wp-quick-pages.zip
-unzip -q wp-quick-pages.zip
-mv wp-quick-pages wordpress/wp-content/plugins/
-
-# Simple Page Ordering
-echo "Simple Page Ordering...";
-wget --quiet http://downloads.wordpress.org/plugin/simple-page-ordering.zip
-unzip -q simple-page-ordering.zip
-mv simple-page-ordering wordpress/wp-content/plugins/
-
-# FeedWordPress
-echo "FeedWordPress...";
-wget --quiet http://downloads.wordpress.org/plugin/feedwordpress.zip
-unzip -q feedwordpress.zip
-mv feedwordpress wordpress/wp-content/plugins/
-
-# BackupWPup
-echo "BackupWPup...";
-wget --quiet http://downloads.wordpress.org/plugin/backwpup.zip
-unzip -q backwpup.zip
-mv backwpup wordpress/wp-content/plugins/
-
-# Options Framework
-echo "Fetching Options Framework plugin..."
-wget --quiet "http://downloads.wordpress.org/plugin/options-framework.zip"
-unzip -q options-framework.zip
-mv options-framework wordpress/wp-content/plugins/
-
-# Meta
-echo "Fetching Meta Box plugin..."
-wget --quiet "http://downloads.wordpress.org/plugin/meta-box.zip"
-unzip -q meta-box.zip
-mv meta-box wordpress/wp-content/plugins/
-
-# Cleanup
-echo "Hersey temizleniyor...";
-rm *.zip
+  # Super-cache
+  echo "Super Cache eklentisi indiriliyor...";
+  wget --quiet http://downloads.wordpress.org/plugin/wp-super-cache.zip;
+  unzip -q  wp-super-cache.zip;
+  mv wp-super-cache wordpress/wp-content/plugins/
+  #####  Pluginler indirilip kuruluyor ####
 
 
-# Move stuff into current directory
-mv wordpress/* .;
-rm -rf wordpress;
-
-
-# Disable the built-in file editor because it's a hacking vector and I hate it
-echo "Disabling file editor...";
-echo "
-/* Disable the file editor */
-define(‘DISALLOW_FILE_EDIT’, true);" >> wp-config-sample.php
-
-echo "Done!";
+	echo "Config dosyası ayarlanıyor..."
+	#create wp config
+	cp wp-config-sample.php wp-config.php
+	#set database details with perl find and replace
+	perl -pi -e "s/database_name_here/$dbname/g" wp-config.php
+	perl -pi -e "s/username_here/$dbuser/g" wp-config.php
+	perl -pi -e "s/password_here/$dbpass/g" wp-config.php
+	perl -pi -e "s/wp_/$dbtable/g" wp-config.php
+	#create uploads folder and set permissions
+	mkdir wp-content/uploads
+  echo "Yazma izinleri verildi..."
+  chmod 777 wp-content/uploads
+	echo "Gereksiz dosyalar siliniyor..."
+	#remove wordpress/ dir
+	rmdir wordpress
+	#remove zip file
+	rm wordpress.zip
+	#remove bash script if it exists in this dir
+	[[ -f "$file" ]] && rm "setup.sh"
+	echo "========================="
+	echo "[Başarılı]: Kurulum başarıyla tamamlandı !"
+	echo "========================="
+else
+	exit
+fi
