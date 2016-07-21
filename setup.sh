@@ -10,8 +10,6 @@
 #
 # 	There you go.
 #
-
-
 #!/bin/bash -e
 clear
 echo "============================================"
@@ -59,65 +57,65 @@ if [ "$run" == y ] ; then
   echo "@mehmetkilic"
 	echo "============================================"
 
-  # Wordpress indiriliyor
-  echo "Wordpress indiriliyor...";
-  wget --quiet http://mehmetkilic.com.tr/wordpress.zip;
-  unzip -q wordpress.zip;
-  echo "Wordpress indirildi ve çıkarıldı.";
-	# Wordpress ana dizine taşınıyor
-	echo "Dosyalar çıkarılıyor..."
-	mv wordpress/* ./
+# Wordpress indiriliyor
+echo "Wordpress indiriliyor...";
+wget --quiet http://mehmetkilic.com.tr/wordpress.zip;
+unzip -q wordpress.zip;
+echo "Wordpress indirildi ve çıkarıldı.";
+# Wordpress ana dizine taşınıyor
+echo "Dosyalar çıkarılıyor..."
+mv wordpress/* ./
 
-  #####  Pluginler indirilip kuruluyor ####
-  # All-in-One-SEO-Pack
-  echo "Eklentiler indiriliyor.";
-  echo "All-in-One-SEO-Pack eklentisi indiriliyor...";
-  wget --quiet http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip;
-  unzip -q all-in-one-seo-pack.zip;
-  mv all-in-one-seo-pack wp-content/plugins/
+#####  Pluginler indirilip kuruluyor ####
+# All-in-One-SEO-Pack
+echo "Eklentiler indiriliyor.";
+echo "All-in-One-SEO-Pack eklentisi indiriliyor...";
+wget --quiet http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip;
+unzip -q all-in-one-seo-pack.zip;
+mv all-in-one-seo-pack wp-content/plugins/
 
-  # Sitemap Generator
-  echo "Google Sitemap Generator eklentisi indiriliyor...";
-  wget --quiet http://downloads.wordpress.org/plugin/google-sitemap-generator.zip;
-  unzip -q  google-sitemap-generator.zip;
-  mv google-sitemap-generator wp-content/plugins/
+# Sitemap Generator
+echo "Google Sitemap Generator eklentisi indiriliyor...";
+wget --quiet http://downloads.wordpress.org/plugin/google-sitemap-generator.zip;
+unzip -q  google-sitemap-generator.zip;
+mv google-sitemap-generator wp-content/plugins/
 
-  # Secure WordPress
-  echo "Secure WordPress eklentisi indiriliyor...";
-  wget --quiet http://downloads.wordpress.org/plugin/secure-wordpress.zip;
-  unzip -q  secure-wordpress.zip;
-  mv secure-wordpress wp-content/plugins/
+# Secure WordPress
+echo "Secure WordPress eklentisi indiriliyor...";
+wget --quiet http://downloads.wordpress.org/plugin/secure-wordpress.zip;
+unzip -q  secure-wordpress.zip;
+mv secure-wordpress wp-content/plugins/
 
-  # Super-cache
-  echo "Super Cache eklentisi indiriliyor...";
-  wget --quiet http://downloads.wordpress.org/plugin/wp-super-cache.zip;
-  unzip -q  wp-super-cache.zip;
-  mv wp-super-cache wp-content/plugins/
-  #####  Pluginler indirilip kuruluyor ####
+# Super-cache
+echo "Super Cache eklentisi indiriliyor...";
+wget --quiet http://downloads.wordpress.org/plugin/wp-super-cache.zip;
+unzip -q  wp-super-cache.zip;
+mv wp-super-cache wp-content/plugins/
+#####  Pluginler indirilip kuruluyor ####
 
 
-	echo "Config dosyası ayarlanıyor..."
-	#create wp config
-	cp wp-config-sample.php wp-config.php
-	#set database details with perl find and replace
-	perl -pi -e "s/database_name_here/$dbname/g" wp-config.php
-	perl -pi -e "s/username_here/$dbuser/g" wp-config.php
-	perl -pi -e "s/password_here/$dbpass/g" wp-config.php
-	perl -pi -e "s/wp_/$dbtable/g" wp-config.php
-	#create uploads folder and set permissions
-	mkdir wp-content/uploads
-  echo "Yazma izinleri verildi..."
-  chmod 777 wp-content/uploads
-	echo "Gereksiz dosyalar siliniyor..."
-	#remove wordpress/ dir
-	rmdir -rvf wordpress
-	#remove zip file
-	rm -rvf wordpress.zip
-	#remove bash script if it exists in this dir
-	[[ -f "$file" ]] && rm "setup.sh"
-	echo "========================="
-	echo "[Başarılı]: Kurulum başarıyla tamamlandı !"
-	echo "========================="
+echo "Config dosyası ayarlanıyor..."
+#create wp config
+cp wp-config-sample.php wp-config.php
+#set database details with perl find and replace
+perl -pi -e "s/database_name_here/$dbname/g" wp-config.php
+perl -pi -e "s/username_here/$dbuser/g" wp-config.php
+perl -pi -e "s/password_here/$dbpass/g" wp-config.php
+perl -pi -e "s/wp_/$dbtable/g" wp-config.php
+#create uploads folder and set permissions
+mkdir wp-content/uploads
+echo "Yazma izinleri verildi..."
+chmod 777 wp-content/uploads
+echo "Gereksiz dosyalar siliniyor..."
+#remove wordpress/ dir
+rmdir -rvf wordpress
+#remove zip file
+rm -rvf wordpress.zip
+#remove bash script if it exists in this dir
+[[ -f "$file" ]] && rm "setup.sh"
+echo "========================="
+echo "[Başarılı]: Kurulum başarıyla tamamlandı !"
+echo "========================="
 else
 	exit
 fi
