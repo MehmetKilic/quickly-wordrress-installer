@@ -42,7 +42,7 @@ if [ "$run" == y ] ; then
 		echo "============================================"
 		echo "Veritabanı oluşturuluyor"
 		echo "============================================"
-		#login to MySQL, add database, add user and grant permissions
+    # mysqle erişerek yeni veritabanını oluşturuyor ve ilgili izinleri veriyor
 		dbsetup="create database $dbname;GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@$mysqlhost IDENTIFIED BY '$dbpass';FLUSH PRIVILEGES;"
 		mysql -u $mysqluser -p$mysqlpass -e "$dbsetup"
 		if [ $? != "0" ]; then
@@ -95,23 +95,23 @@ mv wp-super-cache wp-content/plugins/
 
 
 echo "Config dosyası ayarlanıyor..."
-#create wp config
+# config dosyası oluşturuluyor
 cp wp-config-sample.php wp-config.php
-#set database details with perl find and replace
+# oluşturulan veritabanı bilgileri config dosyalarına yazıyoruz
 perl -pi -e "s/database_name_here/$dbname/g" wp-config.php
 perl -pi -e "s/username_here/$dbuser/g" wp-config.php
 perl -pi -e "s/password_here/$dbpass/g" wp-config.php
 perl -pi -e "s/wp_/$dbtable/g" wp-config.php
-#create uploads folder and set permissions
+# ilgili klasörleri oluşturup yazma izinlerini veriyoruz
 mkdir wp-content/uploads
 echo "Yazma izinleri verildi..."
 chmod 777 wp-content/uploads
 echo "Gereksiz dosyalar siliniyor..."
-#remove wordpress/ dir
-rmdir -rvf wordpress
-#remove zip file
+# ilgili klasörü siliyoruz
+rm -rvf wordpress
+# .zip dosyasını siliyoruz
 rm -rvf wordpress.zip
-#remove bash script if it exists in this dir
+# kurulum bash scripti siliyoruz
 [[ -f "$file" ]] && rm "setup.sh"
 echo "========================="
 echo "[Başarılı]: Kurulum başarıyla tamamlandı !"
