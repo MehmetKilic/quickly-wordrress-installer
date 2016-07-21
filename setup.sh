@@ -98,9 +98,9 @@ echo "Config dosyası ayarlanıyor..."
 # config dosyası oluşturuluyor
 cp wp-config-sample.php wp-config.php
 # oluşturulan veritabanı bilgileri config dosyalarına yazıyoruz
-perl -pi -e "s/database_name_here/$dbname/g" wp-config.php
-perl -pi -e "s/username_here/$dbuser/g" wp-config.php
-perl -pi -e "s/password_here/$dbpass/g" wp-config.php
+perl -pi -e "s/veritabaniismi/$dbname/g" wp-config.php
+perl -pi -e "s/kullaniciadi/$dbuser/g" wp-config.php
+perl -pi -e "s/parola/$dbpass/g" wp-config.php
 perl -pi -e "s/wp_/$dbtable/g" wp-config.php
 # ilgili klasörleri oluşturup yazma izinlerini veriyoruz
 mkdir wp-content/uploads
