@@ -74,25 +74,25 @@ if [ "$run" == y ] ; then
   echo "All-in-One-SEO-Pack eklentisi indiriliyor...";
   wget --quiet http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip;
   unzip -q all-in-one-seo-pack.zip;
-  mv all-in-one-seo-pack wordpress/wp-content/plugins/
+  mv all-in-one-seo-pack wp-content/plugins/
 
   # Sitemap Generator
   echo "Google Sitemap Generator eklentisi indiriliyor...";
   wget --quiet http://downloads.wordpress.org/plugin/google-sitemap-generator.zip;
   unzip -q  google-sitemap-generator.zip;
-  mv google-sitemap-generator wordpress/wp-content/plugins/
+  mv google-sitemap-generator wp-content/plugins/
 
   # Secure WordPress
   echo "Secure WordPress eklentisi indiriliyor...";
   wget --quiet http://downloads.wordpress.org/plugin/secure-wordpress.zip;
   unzip -q  secure-wordpress.zip;
-  mv secure-wordpress wordpress/wp-content/plugins/
+  mv secure-wordpress wp-content/plugins/
 
   # Super-cache
   echo "Super Cache eklentisi indiriliyor...";
   wget --quiet http://downloads.wordpress.org/plugin/wp-super-cache.zip;
   unzip -q  wp-super-cache.zip;
-  mv wp-super-cache wordpress/wp-content/plugins/
+  mv wp-super-cache wp-content/plugins/
   #####  Pluginler indirilip kuruluyor ####
 
 
@@ -110,9 +110,9 @@ if [ "$run" == y ] ; then
   chmod 777 wp-content/uploads
 	echo "Gereksiz dosyalar siliniyor..."
 	#remove wordpress/ dir
-	rmdir wordpress
+	rmdir -rvf wordpress
 	#remove zip file
-	rm wordpress.zip
+	rm -rvf wordpress.zip
 	#remove bash script if it exists in this dir
 	[[ -f "$file" ]] && rm "setup.sh"
 	echo "========================="
